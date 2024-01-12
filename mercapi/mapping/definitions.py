@@ -224,6 +224,11 @@ mapping_definitions: Dict[Type[ResponseModel], ResponseMappingDefinition] = {
             ResponseProperty(
                 "is_offerable_v2", "is_offerable_v2", Extractors.get("is_offerable_v2")
             ),
+            ResponseProperty(
+                "hash_tags",
+                "hash_tags",
+                Extractors.get_list_with("hash_tags", str),
+            ),
         ],
     ),
     Seller: R(

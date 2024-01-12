@@ -144,6 +144,7 @@ class Mercapi:
             return None
 
         body = res.json()
+        print(body)
         return map_to_class(body["data"], Item)
 
     def _item(self, id_: str) -> Request:
@@ -190,7 +191,6 @@ class Mercapi:
             return None
 
         body = res.json()
-        print(body)
         return map_to_class(body, Items)
 
     def _items(self, profile_id: str) -> Request:
@@ -199,7 +199,7 @@ class Mercapi:
             "https://api.mercari.jp/items/get_items",
             params={
                 "seller_id": profile_id,
-                "limit": 30,
+                "limit": 100,
                 "status": "on_sale,trading,sold_out",
             },
             headers=self._headers,
@@ -218,7 +218,6 @@ class Mercapi:
             return None
 
         body = res.json()
-        print(body)
         return map_to_class(body, Reviews)
 
     def _reviews(self, profile_id: str) -> Request:

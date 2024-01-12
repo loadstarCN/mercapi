@@ -62,3 +62,4 @@ class Item(ResponseModel):
     has_additional_service: bool
     has_like_list: bool
     is_offerable_v2: bool
+    hash_tags:List[str]
