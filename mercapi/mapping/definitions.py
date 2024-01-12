@@ -394,17 +394,16 @@ mapping_definitions: Dict[Type[ResponseModel], ResponseMappingDefinition] = {
     ),
 
     Review: R(
-        required_properties=[            
-            ResponseProperty("message", "message", Extractors.get("message")),
+        required_properties=[ 
             ResponseProperty(
                 "user", "user", Extractors.get_as_model("user", Review.User)
             ),
         ],
         optional_properties=[
+            ResponseProperty("message", "message", Extractors.get("message")),
             ResponseProperty("subject", "subject", Extractors.get("subject")),
             ResponseProperty("created", "created", Extractors.get_datetime("created")),
             ResponseProperty("fame", "fame", Extractors.get("fame")),
-            ResponseProperty("pager_id", "pager_id", Extractors.get("pager_id")),
         ],
     ),
     Review.User: R(

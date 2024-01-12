@@ -20,18 +20,18 @@ async def main():
     # full_item = await item.full_item()
     # print(full_item.description)
 
-    item = await m.item('m20186910397')
-    print(item)
+    # item = await m.item('m20186910397')
+    # print(item)
 
-    # profile = await m.profile('980623523')
+    profile = await m.profile('835590991')
     # print(profile)
 
 
     # items = await profile.items()
-    # print(len(items.items))
+    # print(items.items)
 
-    # reviews = await profile.reviews()
-    # print(len(reviews.reviews))
+    reviews = await profile.reviews()
+    print(reviews)
 
 
 if __name__ == '__main__':

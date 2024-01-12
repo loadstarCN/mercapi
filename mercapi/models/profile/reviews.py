@@ -17,7 +17,6 @@ class Review(ResponseModel):
     fame: str
     message: str
     created: datetime
-    pager_id:int
     user: User
 
 @dataclass

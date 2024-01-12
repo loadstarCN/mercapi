@@ -218,6 +218,7 @@ class Mercapi:
             return None
 
         body = res.json()
+        # print(body)
         return map_to_class(body, Reviews)
 
     def _reviews(self, profile_id: str) -> Request:
