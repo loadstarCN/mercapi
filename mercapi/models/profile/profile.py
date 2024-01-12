@@ -47,3 +47,6 @@ class Profile(ResponseModel):
 
     async def items(self) -> "Items":
         return await self._mercapi.items(self.id_)
+
+    async def reviews(self) -> "Reviews":
+        return await self._mercapi.reviews(self.id_)

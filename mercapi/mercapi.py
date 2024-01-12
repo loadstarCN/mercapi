@@ -7,7 +7,7 @@ from ecdsa import SigningKey, NIST256p
 from httpx import Request
 
 from mercapi.mapping import map_to_class
-from mercapi.models import SearchResults, Item, Profile, Items
+from mercapi.models import SearchResults, Item, Profile, Items,Reviews
 from mercapi.models.base import ResponseModel
 from mercapi.requests import SearchRequestData
 from mercapi.util import jwt
@@ -190,6 +190,7 @@ class Mercapi:
             return None
 
         body = res.json()
+        print(body)
         return map_to_class(body, Items)
 
     def _items(self, profile_id: str) -> Request:
@@ -200,6 +201,35 @@ class Mercapi:
                 "seller_id": profile_id,
                 "limit": 30,
                 "status": "on_sale,trading,sold_out",
+            },
+            headers=self._headers,
+        )
+        return self._sign_request(req)
+
+    async def reviews(self, profile_id: str) -> Optional[Reviews]:
+        """Fetch all items sold by specified seller.
+        This method reflects the action of loading single seller profile view.
+
+        :param profile_id: ID of a seller
+        :return: list of items sold by specified seller
+        """
+        res = await self._client.send(self._reviews(profile_id))
+        if res.status_code == 404:
+            return None
+
+        body = res.json()
+        print(body)
+        return map_to_class(body, Reviews)
+
+    def _reviews(self, profile_id: str) -> Request:
+        req = Request(
+            "GET",
+            "https://api.mercari.jp/reviews/history",
+            params={
+                "user_id": profile_id,
+                "limit": 100,
+                "subject": "seller,buyer",
+                "fame": "good,normal,bad",
             },
             headers=self._headers,
         )

@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from typing import NamedTuple, List, Dict, TypeVar, Type, Any, Optional, Callable
 
-from mercapi.models import Item, Items, Profile, SearchResults, SearchResultItem
+from mercapi.models import Item, Items, Profile,Reviews, SearchResults, SearchResultItem
 from mercapi.models.common import ItemCategory, ItemCategorySummary
 from mercapi.models.item.data import (
     Seller,
@@ -18,6 +18,7 @@ from mercapi.models.item.data import (
 from mercapi.util.errors import ParseAPIResponseError
 from mercapi.models.base import ResponseModel
 from mercapi.models.profile.items import SellerItem
+from mercapi.models.profile.reviews import Review
 from mercapi.models.search import Meta
 
 T = TypeVar("T")
@@ -377,6 +378,45 @@ mapping_definitions: Dict[Type[ResponseModel], ResponseMappingDefinition] = {
             ),
         ],
     ),
+
+    Reviews: R(
+        required_properties=[
+            ResponseProperty(
+                "data", "reviews", Extractors.get_list_of_model("data", Review)
+            ),
+        ],
+        optional_properties=[],
+    ),
+
+    Review: R(
+        required_properties=[            
+            ResponseProperty("message", "message", Extractors.get("message")),
+            ResponseProperty(
+                "user", "user", Extractors.get_as_model("user", Review.User)
+            ),
+        ],
+        optional_properties=[
+            ResponseProperty("subject", "subject", Extractors.get("subject")),
+            ResponseProperty("created", "created", Extractors.get_datetime("created")),
+            ResponseProperty("fame", "fame", Extractors.get("fame")),
+            ResponseProperty("pager_id", "pager_id", Extractors.get("pager_id")),
+        ],
+    ),
+    Review.User: R(
+        required_properties=[
+            ResponseProperty("id", "id_", Extractors.get("id")),
+            ResponseProperty("name", "name", Extractors.get("name")),
+        ],
+        optional_properties=[
+            ResponseProperty("photo_url", "photo_url", Extractors.get("photo_url")),
+            ResponseProperty(
+                "photo_thumbnail_url",
+                "photo_thumbnail_url",
+                Extractors.get("photo_thumbnail_url"),
+            ),
+        ],
+    ),
+
     Items: R(
         required_properties=[
             ResponseProperty(
