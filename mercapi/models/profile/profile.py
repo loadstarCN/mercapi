@@ -44,6 +44,7 @@ class Profile(ResponseModel):
     current_point: int
     current_sales: int
     is_organizational_user: bool
+    status: str
 
     async def items(self) -> "Items":
         return await self._mercapi.items(self.id_)

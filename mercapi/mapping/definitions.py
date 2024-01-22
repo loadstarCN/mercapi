@@ -474,6 +474,7 @@ mapping_definitions: Dict[Type[ResponseModel], ResponseMappingDefinition] = {
             ResponseProperty("name", "name", Extractors.get("name")),
         ],
         optional_properties=[
+            ResponseProperty("status", "status", Extractors.get("status")),
             ResponseProperty("photo_url", "photo_url", Extractors.get("photo_url")),
             ResponseProperty(
                 "photo_thumbnail_url",
