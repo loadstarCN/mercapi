@@ -128,8 +128,10 @@ class Mercapi:
             "POST",
             "https://api.mercari.jp/v2/entities:search",
             json=search_request_data.data,
+
             headers=self._headers,
         )
+
         return self._sign_request(req)
 
     async def item(self, id_: str) -> Optional[Item]:
