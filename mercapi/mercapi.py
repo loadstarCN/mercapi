@@ -34,7 +34,7 @@ class Mercapi:
     def __init__(self):
         self._uuid = str(uuid.UUID(int=random.getrandbits(128)))
         self._key = SigningKey.generate(NIST256p)
-        self._client = httpx.AsyncClient()
+        self._client = httpx.AsyncClient(verify=False)
         ResponseModel.set_mercapi(self)
 
     def _sign_request(self, request: Request) -> Request:

@@ -17,9 +17,9 @@ class SearchRequestData(RequestData):
         SHIPPING_METHOD_NO_OPTION = 3
 
     class Status(Enum):
-        STATUS_ON_SALE = 1
+        ITEM_STATUS_ON_SALE = 1
         STATUS_SOLD_OUT = 2
-        # STATUS_TRADING = 3
+        STATUS_TRADING = 3
 
     class SortBy(Enum):
         SORT_SCORE = 1
@@ -65,8 +65,9 @@ class SearchRequestData(RequestData):
     def data(self) -> Dict[str, Any]:
         shipping_methods = [i.name for i in self.search_conditions.shipping_methods]
         status = [i.name for i in self.search_conditions.status]
+
         if "STATUS_SOLD_OUT" in status:
-            status.extend("STATUS_TRADING")
+            status.append("STATUS_TRADING")
 
         if (
             self.search_conditions.sort_by,
@@ -88,7 +89,7 @@ class SearchRequestData(RequestData):
                 "keyword": self.search_conditions.query,
                 "sort": self.search_conditions.sort_by.name,
                 "order": self.search_conditions.sort_order.name,
-                "status": [],
+                "status": status,
                 "sizeId": self.search_conditions.sizes,
                 "categoryId": self.search_conditions.categories,
                 "brandId": self.search_conditions.brands,
